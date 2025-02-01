@@ -2,11 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to NetFortress</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetFortress - Cybersecurity</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #00ffcc;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            overflow: hidden;
+        }
+        .terminal {
+            border: 2px solid #00ffcc;
+            padding: 20px;
+            width: 80%;
+            margin: 50px auto;
+            background: rgba(0, 255, 204, 0.1);
+            text-align: left;
+            font-size: 16px;
+        }
+        .typing {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #00ffcc;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        #networkCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        .btn {
+            background: #00ffcc;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to NetFortress!</h1>
-    <p>Cybersecurity solutions for a safer internet.</p>
+    <canvas id="networkCanvas"></canvas>
+    <div class="terminal">
+        <p>> Welcome to <span class="typing" id="typedText"></span></p>
+        <p>> System security: <span style="color:red;">Under Attack</span></p>
+        <p>> Initiating Firewall Defense...</p>
+        <button class="btn" onclick="startCTF()">Start the Challenge</button>
+    </div>
+
+    <script>
+        const text = "NetFortress - Cybersecurity Gateway";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typedText").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        typeWriter();
+
+        function startCTF() {
+            alert("CTF Challenge Initialized!");
+        }
+
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function drawNetwork() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < 20; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 2, 0, Math.PI * 2);
+                ctx.fillStyle = '#00ffcc';
+                ctx.fill();
+            }
+            requestAnimationFrame(drawNetwork);
+        }
+        drawNetwork();
+    </script>
 </body>
 </html>
 
