@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetFortress - Cybersecurity</title>
+    <title>NetFortress - Cybersecurity CTF</title>
     <style>
         body {
             background-color: #0a0a0a;
@@ -21,24 +21,6 @@
             text-align: left;
             font-size: 16px;
         }
-        .typing {
-            display: inline-block;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid #00ffcc;
-            animation: blink 0.8s infinite;
-        }
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-        #networkCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-        }
         .btn {
             background: #00ffcc;
             color: black;
@@ -48,20 +30,24 @@
             font-size: 18px;
             margin-top: 20px;
         }
+        #challengeOutput {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <canvas id="networkCanvas"></canvas>
     <div class="terminal">
         <p>> Welcome to <span class="typing" id="typedText"></span></p>
         <p>> System security: <span style="color:red;">Under Attack</span></p>
         <p>> Initiating Firewall Defense...</p>
         <button class="btn" onclick="startCTF()">Start the Challenge</button>
+        <p id="challengeOutput"></p>
     </div>
 
     <script>
-        const text = "NetFortress - Cybersecurity Gateway";
+        const text = "NetFortress - Cybersecurity CTF";
         let i = 0;
+
         function typeWriter() {
             if (i < text.length) {
                 document.getElementById("typedText").innerHTML += text.charAt(i);
@@ -69,32 +55,19 @@
                 setTimeout(typeWriter, 100);
             }
         }
-        typeWriter();
+
+        window.onload = function () {
+            typeWriter();
+        };
 
         function startCTF() {
-            alert("CTF Challenge Initialized!");
-        }
-
-        const canvas = document.getElementById('networkCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        function drawNetwork() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 20; i++) {
-                ctx.beginPath();
-                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 2, 0, Math.PI * 2);
-                ctx.fillStyle = '#00ffcc';
-                ctx.fill();
+            let answer = prompt("CTF Challenge: Decode this Base64 string - 'U0VDUkVUX0tFWV9MSU5L'");
+            if (answer === "SECRET_KEY_LINK") {
+                document.getElementById("challengeOutput").innerHTML = "✅ Correct! Here is your flag: <strong>FLAG{BASE64_DEC0D3D}</strong>";
+            } else {
+                document.getElementById("challengeOutput").innerHTML = "❌ Wrong! Try again.";
             }
-            requestAnimationFrame(drawNetwork);
         }
-        drawNetwork();
     </script>
 </body>
 </html>
-
-
-
-
