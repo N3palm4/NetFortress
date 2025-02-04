@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetFortress - Cybersecurity CTF</title>
+    <title>NetFortress - File System CTF</title>
     <style>
         body {
             background-color: #0a0a0a;
@@ -20,53 +20,67 @@
             text-align: left;
             font-size: 16px;
         }
-        .btn {
-            background: #00ffcc;
-            color: black;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            margin-top: 20px;
+        .filesystem {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 50px;
         }
-        #challengeOutput {
-            margin-top: 20px;
-            font-size: 18px;
+        .folder, .file {
+            cursor: pointer;
+            padding: 5px;
+            margin: 2px;
+        }
+        .folder {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        .file {
+            color: #00ffcc;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="terminal">
-        <p>> Welcome to <span class="typing" id="typedText"></span></p>
-        <p>> System security: <span style="color:red;">Under Attack</span></p>
-        <p>> Initiating Firewall Defense...</p>
-        <button class="btn" id="challengeBtn">Start the Challenge</button>
-        <p id="challengeOutput"></p>
+        <p>> Welcome to the NetFortress File System CTF</p>
+        <p>> Navigate the files to find the flag.</p>
+        
+        <div class="filesystem">
+            <div class="folder" onclick="toggleFolder('folder1')">📁 secrets</div>
+            <div id="folder1" class="hidden">
+                <div class="file" onclick="openFile('file1')">📄 hidden.txt</div>
+            </div>
+
+            <div class="folder" onclick="toggleFolder('folder2')">📁 documents</div>
+            <div id="folder2" class="hidden">
+                <div class="file" onclick="openFile('file2')">📄 notes.txt</div>
+                <div class="file" onclick="openFile('file3')">📄 random.doc</div>
+            </div>
+        </div>
+
+        <p id="fileContent"></p>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const text = "NetFortress - Cybersecurity CTF";
-            let i = 0;
+        function toggleFolder(folderId) {
+            let folder = document.getElementById(folderId);
+            folder.classList.toggle("hidden");
+        }
 
-            function typeWriter() {
-                if (i < text.length) {
-                    document.getElementById("typedText").innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 100);
-                }
+        function openFile(fileId) {
+            let fileContent = document.getElementById("fileContent");
+            
+            if (fileId === "file1") {
+                fileContent.innerHTML = "📄 hidden.txt contents: <strong>Q09OR1JBVFVMQVRJT05TISBZT1UgRk9VTkQgVEhFIEZMQUc=</strong> (Base64 encoded)";
+            } else if (fileId === "file2") {
+                fileContent.innerHTML = "Notes: Remember to encrypt important data!";
+            } else if (fileId === "file3") {
+                fileContent.innerHTML = "Random document: Nothing interesting here...";
             }
-            typeWriter();
-
-            document.getElementById("challengeBtn").addEventListener("click", function () {
-                let answer = prompt("CTF Challenge: Decode this Base64 string - 'U0VDUkVUX0tFWV9MSU5L'");
-                if (answer === "SECRET_KEY_LINK") {
-                    document.getElementById("challengeOutput").innerHTML = "✅ Correct! Here is your flag: <strong>FLAG{BASE64_DEC0D3D}</strong>";
-                } else {
-                    document.getElementById("challengeOutput").innerHTML = "❌ Wrong! Try again.";
-                }
-            });
-        });
+        }
     </script>
 </body>
 </html>
