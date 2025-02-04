@@ -10,7 +10,6 @@
             color: #00ffcc;
             font-family: 'Courier New', monospace;
             text-align: center;
-            overflow: hidden;
         }
         .terminal {
             border: 2px solid #00ffcc;
@@ -32,6 +31,7 @@
         }
         #challengeOutput {
             margin-top: 20px;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -40,34 +40,33 @@
         <p>> Welcome to <span class="typing" id="typedText"></span></p>
         <p>> System security: <span style="color:red;">Under Attack</span></p>
         <p>> Initiating Firewall Defense...</p>
-        <button class="btn" onclick="startCTF()">Start the Challenge</button>
+        <button class="btn" id="challengeBtn">Start the Challenge</button>
         <p id="challengeOutput"></p>
     </div>
 
     <script>
-        const text = "NetFortress - Cybersecurity CTF";
-        let i = 0;
+        document.addEventListener("DOMContentLoaded", function () {
+            const text = "NetFortress - Cybersecurity CTF";
+            let i = 0;
 
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typedText").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
+            function typeWriter() {
+                if (i < text.length) {
+                    document.getElementById("typedText").innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
             }
-        }
-
-        window.onload = function () {
             typeWriter();
-        };
 
-        function startCTF() {
-            let answer = prompt("CTF Challenge: Decode this Base64 string - 'U0VDUkVUX0tFWV9MSU5L'");
-            if (answer === "SECRET_KEY_LINK") {
-                document.getElementById("challengeOutput").innerHTML = "✅ Correct! Here is your flag: <strong>FLAG{BASE64_DEC0D3D}</strong>";
-            } else {
-                document.getElementById("challengeOutput").innerHTML = "❌ Wrong! Try again.";
-            }
-        }
+            document.getElementById("challengeBtn").addEventListener("click", function () {
+                let answer = prompt("CTF Challenge: Decode this Base64 string - 'U0VDUkVUX0tFWV9MSU5L'");
+                if (answer === "SECRET_KEY_LINK") {
+                    document.getElementById("challengeOutput").innerHTML = "✅ Correct! Here is your flag: <strong>FLAG{BASE64_DEC0D3D}</strong>";
+                } else {
+                    document.getElementById("challengeOutput").innerHTML = "❌ Wrong! Try again.";
+                }
+            });
+        });
     </script>
 </body>
 </html>
