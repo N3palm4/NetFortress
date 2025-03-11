@@ -3,40 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetFortress - File System CTF</title>
+    <title>CTF Challenge - Firewall</title>
     <style>
         body {
-            background-color: #0a0a0a;
-            color: #00ffcc;
-            font-family: 'Courier New', monospace;
             text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: black;
+            color: white;
         }
-        .terminal {
-            border: 2px solid #00ffcc;
-            padding: 20px;
-            width: 80%;
-            margin: 50px auto;
-            background: rgba(0, 255, 204, 0.1);
-            text-align: left;
-            font-size: 16px;
-        }
-        .filesystem {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-left: 50px;
-        }
-        .folder, .file {
+        #firewall {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
             cursor: pointer;
-            padding: 5px;
-            margin: 2px;
         }
-        .folder {
-            font-weight: bold;
-            color: #ffcc00;
+        .explosion {
+            animation: explode 1s forwards;
         }
-        .file {
-            color: #00ffcc;
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(2); opacity: 0.5; }
+            100% { transform: scale(5); opacity: 0; visibility: hidden; }
         }
         .hidden {
             display: none;
@@ -44,43 +34,23 @@
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <p>> Welcome to the NetFortress File System CTF</p>
-        <p>> Navigate the files to find the flag.</p>
-        
-        <div class="filesystem">
-            <div class="folder" onclick="toggleFolder('folder1')">📁 secrets</div>
-            <div id="folder1" class="hidden">
-                <div class="file" onclick="openFile('file1')">📄 hidden.txt</div>
-            </div>
-
-            <div class="folder" onclick="toggleFolder('folder2')">📁 documents</div>
-            <div id="folder2" class="hidden">
-                <div class="file" onclick="openFile('file2')">📄 notes.txt</div>
-                <div class="file" onclick="openFile('file3')">📄 random.doc</div>
-            </div>
-        </div>
-
-        <p id="fileContent"></p>
-    </div>
-
+    <h1>Initializing Firewall...</h1>
+    <button id="firewall">Activate Firewall</button>
+    
     <script>
-        function toggleFolder(folderId) {
-            let folder = document.getElementById(folderId);
-            folder.classList.toggle("hidden");
-        }
-
-        function openFile(fileId) {
-            let fileContent = document.getElementById("fileContent");
-            
-            if (fileId === "file1") {
-                fileContent.innerHTML = "📄 hidden.txt contents: <strong>Q09OR1JBVFVMQVRJT05TISBZT1UgRk9VTkQgVEhFIEZMQUc=</strong> (Base64 encoded)";
-            } else if (fileId === "file2") {
-                fileContent.innerHTML = "Notes: Remember to encrypt important data!";
-            } else if (fileId === "file3") {
-                fileContent.innerHTML = "Random document: Nothing interesting here...";
-            }
-        }
+        document.getElementById("firewall").addEventListener("click", function() {
+            document.body.classList.add("explosion");
+            setTimeout(() => {
+                document.body.innerHTML = "<h1>Firewall Activated!</h1>";
+                console.log("%cFind the hidden message!", "color: yellow; font-size: 16px;");
+                
+                // Hidden base64-encoded message
+                let hiddenMessage = "V2VsbCBkb25lLCB0aGFuayB5b3UgY29tZSBhZ2FpbiE=";
+                let obfuscatedMessage = "<!-- Encoded Challenge: " + btoa(hiddenMessage) + " -->";
+                document.body.innerHTML += obfuscatedMessage;
+            }, 1000);
+        });
     </script>
 </body>
 </html>
+
