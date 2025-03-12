@@ -9,7 +9,7 @@
             text-align: center;
             font-family: Arial, sans-serif;
             margin: 50px;
-            background-color: black;
+            background-color: #222;
             color: white;
         }
         #firewall {
@@ -34,23 +34,27 @@
     </style>
 </head>
 <body>
-    <h1>Initializing Firewall...</h1>
+    <h1>Firewall System</h1>
+    <p>Initializing firewall defense...</p>
     <button id="firewall">Activate Firewall</button>
+    <p id="status"></p>
     
     <script>
         document.getElementById("firewall").addEventListener("click", function() {
             document.body.classList.add("explosion");
             setTimeout(() => {
-                document.body.innerHTML = "<h1>Firewall Activated!</h1>";
-                console.log("%cFind the hidden message!", "color: yellow; font-size: 16px;");
+                document.body.innerHTML = `
+                    <h1>Firewall Activated!</h1>
+                    <p>The system is now secure...</p>
+                `;
+                console.log("%cHmm, something seems off...", "color: yellow; font-size: 16px;");
                 
                 // Hidden base64-encoded message
                 let hiddenMessage = "V2VsbCBkb25lLCB0aGFuayB5b3UgY29tZSBhZ2FpbiE=";
-                let obfuscatedMessage = "<!-- Encoded Challenge: " + btoa(hiddenMessage) + " -->";
+                let obfuscatedMessage = `<div style='display:none;'>` + hiddenMessage.split('').reverse().join('') + `</div>`;
                 document.body.innerHTML += obfuscatedMessage;
             }, 1000);
         });
     </script>
 </body>
 </html>
-
