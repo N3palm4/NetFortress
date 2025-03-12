@@ -11,6 +11,7 @@
             margin: 50px;
             background-color: #222;
             color: white;
+            overflow: hidden;
         }
         #firewall {
             font-size: 20px;
@@ -20,16 +21,16 @@
             border: none;
             cursor: pointer;
         }
-        .explosion {
-            animation: explode 1s forwards;
+        .fire {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://media.giphy.com/media/3o7TKU8RvQuomFfUUU/giphy.gif') center/cover no-repeat;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
-        @keyframes explode {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(2); opacity: 0.5; }
-            100% { transform: scale(5); opacity: 0; visibility: hidden; }
-        }
-        .hidden {
-            display: none;
+        .fire-active {
+            opacity: 1;
         }
     </style>
 </head>
@@ -38,10 +39,11 @@
     <p>Initializing firewall defense...</p>
     <button id="firewall">Activate Firewall</button>
     <p id="status"></p>
+    <div id="fire" class="fire"></div>
     
     <script>
         document.getElementById("firewall").addEventListener("click", function() {
-            document.body.classList.add("explosion");
+            document.getElementById("fire").classList.add("fire-active");
             setTimeout(() => {
                 document.body.innerHTML = `
                     <h1>Firewall Activated!</h1>
@@ -53,8 +55,9 @@
                 let hiddenMessage = "V2VsbCBkb25lLCB0aGFuayB5b3UgY29tZSBhZ2FpbiE=";
                 let obfuscatedMessage = `<div style='display:none;'>` + hiddenMessage.split('').reverse().join('') + `</div>`;
                 document.body.innerHTML += obfuscatedMessage;
-            }, 1000);
+            }, 2000);
         });
     </script>
 </body>
 </html>
+
